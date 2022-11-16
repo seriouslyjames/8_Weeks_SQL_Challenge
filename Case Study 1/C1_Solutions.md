@@ -1,6 +1,6 @@
 ### 1. What is the total amount each customer spent at the restaurant?
 
-Since customer sales data is in a separate table from menu prices, we'll use a `JOIN` to work out the amount spent.
+- Since customer sales data is in a separate table from menu prices, we'll use a `JOIN` to work out the amount spent.
 ```sql
 SELECT 
     s.customer_id AS customer, 
@@ -14,6 +14,7 @@ GROUP BY s.customer_id;
 
 ### 2. How many days has each customer visited the restaurant?
 
+- Use  `DISTINCT` to count each unique visit and avoid double counting multiple visits on the same day
 ```sql
 SELECT 
     customer_id AS customer, 
@@ -25,11 +26,14 @@ GROUP BY customer_id;
 
 ### 3. What was the first item from the menu purchased by each customer?
 
+- Use a CTE to create a temp table. 
+- Within the CTE, use a Window Function, specifically `DENSE_RANK` to order the menu items per customer
+- In the query, in order to select only the first item(s), we'll use `WHERE` to filter for all '1' rank menu items per our CTE
 ```sql
 WITH earliest_date_cte AS (
 	SELECT customer_id,
 		   product_name,
-		   RANK() OVER(PARTITION BY s.customer_id 
+		   DENSE_RANK() OVER(PARTITION BY s.customer_id 
 						ORDER BY s.order_date) AS date_rank
 	FROM sales AS s
 	JOIN menu m ON s.product_id = m.product_id
@@ -46,6 +50,8 @@ GROUP BY customer_id, product_name
 
 ### 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 
+- Use `COUNT` with `ORDER BY` and `DESC` to work out the most frequently purchased item
+- `TOP` 1 will return only the most purchased item
 ```sql
 SELECT 
 	TOP 1 product_name, 
@@ -59,6 +65,10 @@ ORDER BY times_ordered DESC;
 
 ### 5. Which item was the most popular for each customer?
 
+- Use a CTE to create a temp table
+- Within the CTE, return the `COUNT` of each product along with a Window Function, `DENSE_RANK`, to return each poroducts popularity rank - with rank 1 being most popular
+- `GROUP` by customer
+- In the query, use `WHERE` to return all rows with rank = 1
 ```sql
 WITH cte AS (
 	SELECT 
@@ -82,10 +92,16 @@ WHERE order_rank = 1
 
 ### 6. Which item was purchased first by the customer after they became a member?
 
+- Use a CTE to create a temp table
+- Within the CTE, use a subquery to return a combined table from sales and members 
+- This subquery table will return the date differential between the member's join date and their order date using `DATEDIFF`
+- Outside of the subquery, and within the CTE, we'll use a Window Function, `DENSE_RANK`, to order the date differential returned by our subquery in `ASC` order
+- In the event the customer became a member after their first order, we'll use `WHERE` to filter for only date differentials equal or higher than 0
+- In the query, return the results using `WHERE` rank = 1 for the first product purchased after becoming a member
 ```sql
 WITH cte AS (
 	SELECT *,
-			DENSE_RANK() OVER(PARTITION BY customer ORDER BY date_diff ASC) AS date_rank
+		DENSE_RANK() OVER(PARTITION BY customer ORDER BY date_diff ASC) AS date_rank
 	FROM (SELECT s.customer_id AS customer, 
 				order_date, 
 				product_id, 
@@ -109,6 +125,9 @@ WHERE date_rank = 1
 
 ### 7. Which item was purchased just before the customer became a member?
 
+- Logic is similar to question 6, instead of the Window Function being ordered by `ASC`, we'll use `DESC` instead 
+- Combined with using `WHERE` to return only date differentials of less than 0, this will give us list of items purchased before the membership start date 
+- In the query, return the results using `WHERE` rank = 1 for the last product purchased before they became a member
 ```sql
 WITH cte AS (
 	SELECT *,
@@ -136,6 +155,9 @@ WHERE date_rank = 1
 
 ### 8. What is the total items and amount spent for each member before they became a member?
 
+- Create a temp table with a CTE
+- Within the CTE, use `WHERE` to filter for data with 'order_date' being before 'join_date'
+- In the query, use `COUNT` to return the number of items they've ordered and `SUM` to return the amount spent per customer
 ```sql
 WITH cte AS (
 	SELECT 
@@ -159,6 +181,10 @@ GROUP BY c.customer_id
 
 ### 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
+- Create a temp table with a CTE
+- WIthin the CTE, use `CASE` to create a new column and assign the points value of each menu item to this column
+- Since Sushi is the only item with a different point value, we only need the `WHEN` clause for Sushi with the `ELSE` clause accounting for the remaining items on the menu
+- In the query, use `SUM` to return the total amount spent and total points
 ```sql
 WITH cte AS (
 	SELECT product_id, 
@@ -184,6 +210,11 @@ GROUP BY s.customer_id;
 
 ### 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
+- Create a temp table with a CTE
+- Within the CTE, return a table using `WHERE` to filter the specified date range
+- To get our specified date range (1st week after becoming a member), we use `DATEADD` with the join date and '7' to return the 7th day after becoming a member
+- In the query, we can now use `SUM` to return the total amount spent for the first week
+- Unlike Question 9 where only Sushi was worth 20 points, all items are now worth 20 points which allows us to simply multiple the price by 20 to get the total points
 ```sql
 WITH cte AS (
 	SELECT 
@@ -222,7 +253,7 @@ LEFT JOIN members AS mb ON s.customer_id = mb.customer_id
 ```
 ![image](https://user-images.githubusercontent.com/12231066/202123669-6685a55f-1617-4b5e-bf43-620b51e87bf9.png)
 
-### Bonus Question 2. Join All The Things
+### Bonus Question 2. Rank All The Things
 
 ```sql
 WITH cte AS (
