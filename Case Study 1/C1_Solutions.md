@@ -214,7 +214,7 @@ GROUP BY s.customer_id;
 - Within the CTE, return a table using `WHERE` to filter the specified date range
 - To get our specified date range (1st week after becoming a member), we use `DATEADD` with the join date and '7' to return the 7th day after becoming a member
 - In the query, we can now use `SUM` to return the total amount spent for the first week
-- Unlike Question 9 where only Sushi was worth 20 points, all items are now worth 20 points which allows us to simply multiple the price by 20 to get the total points
+- Unlike Question 9 where only Sushi was worth 20 points, all items are now worth 20 points which allows us to simply multiply the price by 20 to get the total points
 ```sql
 WITH cte AS (
 	SELECT 
@@ -237,6 +237,15 @@ GROUP BY customer_id;
 
 ### Bonus Question 1. Join All The Things
 
+Scenario: Recreate the following table output using the available data
+
+![image](https://user-images.githubusercontent.com/12231066/202135979-c9372405-87a7-4860-b0de-0b1211d42e17.png)
+
+- It appears the table we're being asked to recreate is a combination of three tables - 'sales, 'menu', and 'members'
+- The requested table also specifies each customer order and whether there were a member or not at the time of the order
+
+- Create a temp table with a CTE
+- Within the CTE, use `CASE` to create a new column with 'Y' or 'N' results based on whether the customer's membership join date is before their order date 
 ```sql
 SELECT 
 	s.customer_id,
@@ -255,6 +264,12 @@ LEFT JOIN members AS mb ON s.customer_id = mb.customer_id
 
 ### Bonus Question 2. Rank All The Things
 
+Scenario: Danny also requires further information about the ranking of customer products, but he purposely does not need the ranking for non-member purchases so he expects null ranking values for the records when customers are not yet part of the loyalty program.
+
+- Create a temp table with a CTE
+- Within the CTE, use `CASE` to create a new column with 'Y' or 'N' results based on whether the customer's membership join date is before their order date 
+- The CTE will require 2 `JOIN` clauses to combine the 'sales', 'menu', and 'members' table
+- In the query, use `CASE` combined with a Window Function, `DENSE_RANK`, to order all members denoted 'Y'
 ```sql
 WITH cte AS (
 	SELECT 
