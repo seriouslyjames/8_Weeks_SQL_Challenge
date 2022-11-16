@@ -244,8 +244,7 @@ Scenario: Recreate the following table output using the available data
 - It appears the table we're being asked to recreate is a combination of three tables - 'sales, 'menu', and 'members'
 - The requested table also specifies each customer order and whether there were a member or not at the time of the order
 
-- Create a temp table with a CTE
-- Within the CTE, use `CASE` to create a new column with 'Y' or 'N' results based on whether the customer's membership join date is before their order date 
+- Use `CASE` to create a new column with 'Y' or 'N' results based on whether the customer's membership join date is before their order date 
 ```sql
 SELECT 
 	s.customer_id,
