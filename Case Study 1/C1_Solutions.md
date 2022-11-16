@@ -1,5 +1,6 @@
 ### 1. What is the total amount each customer spent at the restaurant?
 
+Since customer sales data is in a separate table from menu prices, we'll use a `JOIN` to work out the amount spent.
 ```sql
 SELECT 
     s.customer_id AS customer, 
@@ -8,6 +9,8 @@ FROM sales AS s
 JOIN menu AS m ON s.product_id = m.product_id
 GROUP BY s.customer_id;
 ```
+
+![image](https://user-images.githubusercontent.com/12231066/202123504-e8408ea3-3750-48f3-8f14-e387a48967ed.png)
 
 ### 2. How many days has each customer visited the restaurant?
 
@@ -18,6 +21,7 @@ SELECT
 FROM sales
 GROUP BY customer_id;
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123519-48d5579c-395a-442f-813c-027f5fa87d9d.png)
 
 ### 3. What was the first item from the menu purchased by each customer?
 
@@ -38,6 +42,7 @@ FROM earliest_date_cte
 WHERE date_rank = 1
 GROUP BY customer_id, product_name
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123536-bbb0cb9d-c5f8-4644-ae2a-43ff73462558.png)
 
 ### 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 
@@ -50,6 +55,7 @@ JOIN menu AS m ON s.product_id = m.product_id
 GROUP BY product_name
 ORDER BY times_ordered DESC;
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123554-1de24c29-df80-475e-bbfd-590b66ab6331.png)
 
 ### 5. Which item was the most popular for each customer?
 
@@ -72,6 +78,7 @@ SELECT
 FROM cte
 WHERE order_rank = 1
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123571-cc8c5903-90f3-4794-8ef2-663c7084d775.png)
 
 ### 6. Which item was purchased first by the customer after they became a member?
 
@@ -98,6 +105,7 @@ FROM cte AS c
 LEFT JOIN menu AS m ON c.product_id = m.product_id
 WHERE date_rank = 1
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123590-ca62ac45-ba4b-4cc8-ad6b-136e86301aeb.png)
 
 ### 7. Which item was purchased just before the customer became a member?
 
@@ -124,6 +132,7 @@ FROM cte AS c
 LEFT JOIN menu AS m ON c.product_id = m.product_id
 WHERE date_rank = 1
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123596-a6d513db-48b7-46b6-9d33-b79ef22cf356.png)
 
 ### 8. What is the total items and amount spent for each member before they became a member?
 
@@ -146,6 +155,7 @@ FROM cte AS c
 JOIN menu AS m ON c.product_id = m.product_id
 GROUP BY c.customer_id
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123601-fda139d4-d0ae-46b8-8322-4460b5d01466.png)
 
 ### 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
@@ -170,6 +180,7 @@ JOIN cte AS c ON s.product_id = c.product_id
 GROUP BY s.customer_id;
 
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123620-bd533b5b-99f1-4f05-9543-b765b58acab0.png)
 
 ### 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
@@ -191,6 +202,7 @@ FROM cte AS c
 LEFT JOIN menu AS m ON c.product_id = m.product_id
 GROUP BY customer_id;
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123634-4add6ffb-3f0c-44b3-beee-94c567544a83.png)
 
 ### Bonus Question 1. Join All The Things
 
@@ -208,8 +220,9 @@ FROM sales AS s
 LEFT JOIN menu AS m ON s.product_id = m.product_id
 LEFT JOIN members AS mb ON s.customer_id = mb.customer_id
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123669-6685a55f-1617-4b5e-bf43-620b51e87bf9.png)
 
-### Bonus Question 3. Join All The Things
+### Bonus Question 2. Join All The Things
 
 ```sql
 WITH cte AS (
@@ -234,5 +247,6 @@ SELECT *,
 	END AS ranking
 FROM cte
 ```
+![image](https://user-images.githubusercontent.com/12231066/202123707-95ef1d0d-838c-4b75-8689-2bd923d938e2.png)
 
 
