@@ -34,7 +34,7 @@ Entity Relationship Diagram
 
 ### Case Study Questions
 
-### Part A
+#### Part A
 
 1. How many unique nodes are there on the Data Bank system?
 2. What is the number of nodes per region?
@@ -42,7 +42,7 @@ Entity Relationship Diagram
 4. How many days on average are customers reallocated to a different node?
 5. What is the median, 80th and 95th percentile for this same reallocation days metric for each region?
 
-### Part B
+#### Part B
 
 1. What is the unique count and total amount for each transaction type?
 2. What is the average total historical deposit counts and amounts for all customers?
