@@ -60,6 +60,7 @@ SELECT
 FROM pizza_runner.runner_orders;
 	
 ```
+## Part A
 
 ### 1. How many pizzas were ordered?
 
@@ -222,6 +223,8 @@ FROM cte
 GROUP BY 1;
 ```
 ![image](https://user-images.githubusercontent.com/12231066/203700477-4e065170-08f7-41df-9997-73663979deff.png)
+
+## Part B
 
 ### 1. How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
 
