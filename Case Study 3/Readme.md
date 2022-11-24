@@ -29,7 +29,7 @@ Entity Relationship Diagram
 
 ### Case Study Questions
 
-### Part B
+#### Part B
 
 1. How many customers has Foodie-Fi ever had?
 2. What is the monthly distribution of `trial` plan `start_date` values for our dataset - use the start of the month as the group by value
