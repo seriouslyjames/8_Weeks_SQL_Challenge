@@ -32,3 +32,30 @@ The pizza_runner database schema includes the following tables:
 Entity Relationship Diagram
 
 ![image](https://user-images.githubusercontent.com/12231066/203696741-f5099f47-7f30-407a-b393-95af34999b4c.png)
+
+### Case Study Questions
+
+1. What is the total amount each customer spent at the restaurant?
+2. How many days has each customer visited the restaurant?
+3. What was the first item from the menu purchased by each customer?
+4. What is the most purchased item on the menu and how many times was it purchased by all customers?
+5. Which item was the most popular for each customer?
+6. Which item was purchased first by the customer after they became a member?
+7. Which item was purchased just before the customer became a member?
+8. What is the total items and amount spent for each member before they became a member?
+9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+
+Bonus Questions
+
+- Join All The Things
+
+Recreate the following table output using the available data:
+
+![image](https://user-images.githubusercontent.com/12231066/203732471-66cca7b4-6a76-4af0-8e53-b264494ba928.png)
+
+- Rank All The Things
+
+Danny also requires further information about the ranking of customer products, but he purposely does not need the ranking for non-member purchases so he expects null ranking values for the records when customers are not yet part of the loyalty program.
+
+![image](https://user-images.githubusercontent.com/12231066/203732610-997b2825-b305-4cd1-b466-cc9b274c8068.png)
