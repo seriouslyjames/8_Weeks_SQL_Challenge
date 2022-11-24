@@ -159,6 +159,7 @@ SELECT DISTINCT week_number
 FROM public.clean_weekly_sales
 WHERE week_date = '2020-06-15';
 ```
+![image](https://user-images.githubusercontent.com/12231066/203701085-9ac49488-0129-4b5a-b094-f23dd48759ef.png)
 
 ```sql
 WITH cte AS (
@@ -180,8 +181,6 @@ SELECT
 	ROUND(100 * (total_sales_after - total_sales_before)::decimal / total_sales_before, 2) AS percentage_difference
 FROM cte;
 ```
-![image](https://user-images.githubusercontent.com/12231066/203701085-9ac49488-0129-4b5a-b094-f23dd48759ef.png)
-
 ![image](https://user-images.githubusercontent.com/12231066/203701093-13aba17b-95c8-4ecb-b116-8274fbc3671e.png)
 
 ### 2. What about the entire 12 weeks before and after?
