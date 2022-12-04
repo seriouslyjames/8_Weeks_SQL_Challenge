@@ -112,7 +112,8 @@ SELECT
 	plan_id,
 	COUNT(DISTINCT customer_id) AS cnt_customers,
 	COUNT(DISTINCT customer_id) * 100 / (SELECT COUNT(customer_id)
-									   		FROM foodie_fi.subscriptions) AS percentage_customers
+					     FROM foodie_fi.subscriptions
+					    ) AS percentage_customers
 FROM cte
 GROUP BY 1
 ORDER by 1;
