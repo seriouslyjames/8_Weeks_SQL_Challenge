@@ -91,7 +91,7 @@ SELECT
 	COUNT(DISTINCT customer_id),
 	SUM(txn_amount) AS txn_sum
 FROM data_bank.customer_transactions
-GROUP BY txn_type;![image](https://user-images.githubusercontent.com/12231066/203700800-79e25cd5-d929-4022-917b-c2c18eff484d.png)
+GROUP BY txn_type;
 ```
 ![image](https://user-images.githubusercontent.com/12231066/203700813-67b2ce63-7470-4b32-8137-f549a1a002a8.png)
 
