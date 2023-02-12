@@ -66,7 +66,7 @@ ORDER BY times_ordered DESC;
 ### 5. Which item was the most popular for each customer?
 
 - Use a CTE to create a temp table
-- Within the CTE, return the `COUNT` of each product along with a Window Function, `DENSE_RANK`, to return each poroducts popularity rank - with rank 1 being most popular
+- Within the CTE, return the `COUNT` of each product along with a Window Function, `DENSE_RANK`, to return each products popularity rank - with rank 1 being most popular
 - `GROUP` by customer
 - In the query, use `WHERE` to return all rows with rank = 1
 ```sql
